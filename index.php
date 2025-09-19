@@ -20,9 +20,9 @@ error_reporting(E_ALL);
 // DB CONFIG – change these to match your environment
 //------------------------------------------------------
 $DB_HOST = 'localhost';
-$DB_NAME = 'aquaguard_db';
-$DB_USER = 'root';
-$DB_PASS = '';
+$DB_NAME = 'u801377270_aquaguard_db';
+$DB_USER = 'u801377270_aquaguard_db';
+$DB_PASS = 'Aquaguard@2025';
 
 //------------------------------------------------------
 // DB CONNECTION
