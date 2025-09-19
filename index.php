@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 /**
  * AquaGuard – Mobile-Responsive Web App (Single-file PHP)
  * Tech: PHP 8+, MySQL, jQuery, Bootstrap 5, Chart.js
@@ -8,7 +11,7 @@
  * 2) Load the page – it will auto-create tables and a demo account.
  *    Demo login: demo@example.com / demo1234
  *
- * NOTE: This single-file version  
+ * NOTE: This single-file version
  * (Login/Signup · Dashboard with metrics & charts · Sensor Settings · Smart Recommendation
  *  · Fishpond Settings · Edit Profile), optimized for mobile.
  */
@@ -292,38 +295,82 @@ $page = $_GET['page'] ?? (current_user() ? 'dashboard' : 'login');
   <title>AquaGuard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    :root{--ag-primary:#0EA5E9; --ag-dark:#0B1220; --ag-accent:#10B981; --ag-warn:#F59E0B;}
-    body{background:#0B1220; color:#f5f5f7;}
-    .brand{font-weight:800; letter-spacing:2px}
-    .card.ag{background:#0e1528; border:1px solid #1f2a44;}
-    .ag-pill{background:#111b33; border:1px solid #1f2a44;}
-    .metric{font-size: .9rem; text-transform:uppercase; opacity:.8}
-    .value{font-size:1.6rem; font-weight:700}
-    .ok{color:var(--ag-accent)}
-    .neutral{color:#60a5fa}
-    .warn{color:var(--ag-warn)}
-    .nav-tabs .nav-link{color:#bcd;}
-    .nav-tabs .nav-link.active{background:#0e1528; color:#fff; border-color:#1f2a44 #1f2a44 transparent}
-    .calendar{display:grid; grid-template-columns:repeat(7,1fr); gap:.25rem;}
-    .calendar .day{padding:.35rem; text-align:center; border-radius:.4rem; background:#0e1528;}
-    .calendar .head{opacity:.7; font-size:.8rem}
-    .btn-ag{background:var(--ag-primary); border:none}
-    .btn-ag:hover{background:#0284c7}
-    a, .link-light{color:#cfe7ff}
-    .form-control, .form-select{background:#0e1528; border:1px solid #1f2a44; color:#e5e7eb}
-    .form-control::placeholder{color:#6b7280}
-    .modal-content{background:#0e1528; color:#e5e7eb; border:1px solid #1f2a44}
-    .navbar{background:#0e1528}
-    .chip{background:#0e1a2f; border:1px solid #243253; padding:.35rem .6rem; border-radius:999px; font-size:.8rem}
-  </style>
+<style>
+:root{--ag-primary:#0EA5E9; --ag-dark:#0B1220; --ag-accent:#10B981; --ag-warn:#F59E0B;}
+body{background:#0B1220; color:#f5f5f7;}
+.brand{font-weight:800; letter-spacing:2px}
+.card.ag{background:#0e1528; border:1px solid #1f2a44;}
+.ag-pill{background:#111b33; border:1px solid #1f2a44;}
+.metric{font-size: .9rem; text-transform:uppercase; opacity:.8}
+.value{font-size:1.6rem; font-weight:700}
+.ok{color:var(--ag-accent)}
+.neutral{color:#60a5fa}
+.warn{color:var(--ag-warn)}
+.nav-tabs .nav-link{color:#bcd;}
+.nav-tabs .nav-link.active{background:#0e1528; color:#fff; border-color:#1f2a44 #1f2a44 transparent}
+.calendar{display:grid; grid-template-columns:repeat(7,1fr); gap:.25rem; background:#f8fafc; padding:.5rem; border-radius:.5rem; color:#111827;}
+.calendar .day{padding:.35rem; text-align:center; border-radius:.4rem; background:#e5e7eb;}
+.calendar .head{opacity:.7; font-size:.8rem; font-weight:600;}
+.btn-ag{background:var(--ag-primary); border:none}
+.btn-ag:hover{background:#0284c7}
+a, .link-light{color:#cfe7ff}
+.form-control, .form-select{background:#0e1528; border:1px solid #1f2a44; color:#e5e7eb}
+.form-control::placeholder{color:#6b7280}
+.modal-content{background:#0e1528; color:#e5e7eb; border:1px solid #1f2a44}
+.navbar{background:#0e1528}
+.chip{background:#0e1a2f; border:1px solid #243253; padding:.35rem .6rem; border-radius:999px; font-size:.8rem}
+
+
+.navbar .nav-link {
+  color: #ffffff !important; /* normal color */
+}
+
+.navbar .nav-link:hover {
+  color: #00bfff !important; /* hover color */
+}
+
+.navbar .nav-link.active {
+  color: #ffcc00 !important; /* active color */
+
+  
+}
+
+/* Hello, nikkiella! */
+.h5.mb-0 {
+  color: #ffffff !important;
+}
+
+/* April 2025 style calendar */
+.chip {
+  color: #ffffff !important;
+}
+
+/* Water Temperature, Water Turbidity, pH Level */
+.metric {
+  color: #ffffff !important;
+}
+
+
+/* The username (fw-bold) */
+.fw-bold {
+  color: #ffffff !important;
+}
+
+/* The ID text (text-secondary small) */
+.text-secondary.small {
+  color: #ffffff !important;
+}
+
+
+
+</style>
 </head>
 <body>
 
 <?php if (current_user()): ?>
 <nav class="navbar navbar-expand-lg mb-3 sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand text-info brand" href="?page=dashboard">AQUAG<span class="text-secondary">UARD</span></a>
+    <a class="navbar-brand text-info brand" href="?page=dashboard">AQUA<span class="text-secondary">GUARD</span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -345,7 +392,7 @@ $page = $_GET['page'] ?? (current_user() ? 'dashboard' : 'login');
     <div class="row justify-content-center mt-5">
       <div class="col-12 col-md-6 col-lg-5">
         <div class="text-center mb-4">
-          <h1 class="brand text-info">AQUAG<span class="text-secondary">UARD</span></h1>
+          <h1 class="brand text-info">AQUA<span class="text-secondary">GUARD</span></h1>
           <p class="text-secondary">Grow More. Waste Less. Farm Smart.</p>
         </div>
         <ul class="nav nav-tabs mb-3" role="tablist">
@@ -445,7 +492,9 @@ $page = $_GET['page'] ?? (current_user() ? 'dashboard' : 'login');
                 <div class="chip">Normal</div>
                 <div class="small text-secondary">per 3 hours</div>
               </div>
-              <canvas id="chartTemp" height="150"></canvas>
+             <div class="chart-container" style="height:300px;">
+  <canvas id="chartTemp"></canvas>
+</div>
               <div class="small text-secondary mt-2">Ideal Temperature Range</div>
             </div>
             <div class="tab-pane fade" id="tabTurbidity" role="tabpanel">
@@ -453,7 +502,9 @@ $page = $_GET['page'] ?? (current_user() ? 'dashboard' : 'login');
                 <div class="chip">Normal</div>
                 <div class="small text-secondary">per 3 days</div>
               </div>
-              <canvas id="chartTurb" height="150"></canvas>
+              <div class="chart-container" style="height:300px;">
+  <canvas id="chartTurb"></canvas>
+</div>
               <div class="small text-secondary mt-2">Ideal Turbidity</div>
             </div>
             <div class="tab-pane fade" id="tabPH" role="tabpanel">
@@ -461,7 +512,9 @@ $page = $_GET['page'] ?? (current_user() ? 'dashboard' : 'login');
                 <div class="chip">Neutral</div>
                 <div class="small text-secondary">per 3 days</div>
               </div>
-              <canvas id="chartPH" height="150"></canvas>
+              <div class="chart-container" style="height:300px;">
+  <canvas id="chartPH"></canvas>
+</div>
               <div class="small text-secondary mt-2">Ideal range</div>
             </div>
           </div>
@@ -485,13 +538,13 @@ $page = $_GET['page'] ?? (current_user() ? 'dashboard' : 'login');
             <button class="btn btn-outline-info" id="btnEditProfileRight"><i class="bi bi-pencil"></i> Edit Profile</button>
           </div>
         </div>
-        <div class="card ag p-3">
+        <div class="card ag p-3" style="background-color:#ffffff">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
               <div class="fw-bold"><?=$monthLabel?></div>
             </div>
           </div>
-          <div class="calendar" id="cal"></div>
+          <div class="calendar" id="cal" style="background-color:#ffffff"></div>
         </div>
       </div>
     </div>
